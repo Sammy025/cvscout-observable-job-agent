@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     scout_tailor_model: str = Field(default="openai:gpt-4o-mini", alias="SCOUT_TAILOR_MODEL")
 
     openai_api_key: SecretStr = Field(default=SecretStr(""), alias="OPENAI_API_KEY")
-
+    groq_api_key: SecretStr = Field(default=SecretStr(""), alias="GROQ_API_KEY")
     opik_api_key: SecretStr = Field(default=SecretStr(""), alias="OPIK_API_KEY")
     opik_workspace: str = Field(default="", alias="OPIK_WORKSPACE")
     opik_project_name: str = Field(default="job-scout", alias="OPIK_PROJECT_NAME")

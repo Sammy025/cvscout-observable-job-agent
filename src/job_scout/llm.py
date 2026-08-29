@@ -34,12 +34,21 @@ def _export_openai_key() -> None:
     if key:
         os.environ["OPENAI_API_KEY"] = key
 
-
+def _export_groq_key() -> None:
+    """Copy the Groq key from settings into the environment for LangChain."""
+    if os.environ.get("GROQ_API_KEY"):
+        return
+    key = get_settings().groq_api_key.get_secret_value()
+    if key:
+        os.environ["GROQ_API_KEY"] = key
+        
 @lru_cache(maxsize=8)
 def get_chat_model(model: str, temperature: float = 0.0) -> BaseChatModel:
     """Return a cached chat model for a LangChain provider string (e.g. ``openai:gpt-4o-mini``)."""
     if model.startswith("openai:"):
         _export_openai_key()
+    elif model.startswith("groq:"):
+        _export_groq_key()
     return init_chat_model(model, temperature=temperature)
 
 
